@@ -548,7 +548,7 @@ P215–P217 把审计里的高危 + 中危 + 低危项（20 项）全部修完�
 
 1. **重新出 release 包**：~~已完成~~ P217 后于 22:17 重出（13.7 MB、`CN=LanWeiXi`、versionCode 1 / 2.0.0、zipalign 通过、SHA-256 `E24062A0…FEA5D`），dex 已确认含 EventRetention / ChatStreamLog / RestoreBackups / SsrfGuard / LuaInstructionLimiter。下次发版记得 versionCode +1。
 2. **补截图**：~~已完成~~ README 已嵌入 5 张真机截图（`docs/screenshots/*.jpg`，会话列表 / 群聊 / 待审核 / 复盘 / 设置，540×1200 也符合 Play 截图要求）。Play 还需要数据安全表单、内容分级、隐私政策 URL。
-3. **GitHub 开源**（如果要做）：`git init` + 首次提交；远端与许可证已就绪（MIT）。
+3. **GitHub 开源**：~~已完成~~ <https://github.com/W3967/ranmiki>（public，main 分支，首次提交 `e91f07c`，已配 topics：android / kotlin / jetpack-compose / ai / llm / privacy / offline-first）。
 4. **Play 商店**：数据安全表单（本应用不收集数据）、内容分级、隐私政策 URL（用 PRIVACY.md 的 raw 链接）。
 5. 有 Anthropic Key 时补端到端：切 Claude → 普通流式 → 「记一下」看 tool_use 回填。
 6. 其他待办见 ROADMAP（插件会话授权 / 群聊接工具）。

@@ -97,7 +97,7 @@ Set-Location 'D:\work\lanweixi-native'
 | 顺序 | 任务 | 量级 | 说明 |
 |---|---|---|---|
 | 1 | Play 上架材料 | 中 | **截图已就绪**（`docs/screenshots/*.jpg`，5 张 540×1200，符合 Play 要求）；还差数据安全表单、内容分级、隐私政策 URL |
-| 2 | GitHub 开源收尾 | 小 | `git init` + 首次提交（许可证/README/隐私已就绪）；确认 .gitignore 没漏 |
+| 2 | GitHub 仓库维护 | 小 | ~~首次提交~~ **已完成**：<https://github.com/W3967/ranmiki>（main，`e91f07c`，已设 topics）；后续 push 需代理，见坑 20 |
 | 3 | Anthropic 端到端补验 | 小 | 有 Key 后：切 Claude → 普通流式 → 「记一下」看 tool_use 回填 |
 | 4 | 真实使用校准 | — | 长会话摘要阈值 / 历史翻页 / 用量展示 |
 
@@ -124,6 +124,7 @@ Set-Location 'D:\work\lanweixi-native'
 17. **拉/推设备数据库别用 PowerShell 的 `>`** —— P216 真机验证踩过：`adb exec-out ... > lw.db` 会用文本编码写文件，sqlite3 报 `file is not a database`。拉：`cmd /c "adb exec-out run-as com.lanweixi.client cat databases/lanweixi.db > local.db"`。推：`adb shell` 的 stdin 不透传（`cat > db < local.db` 得到 0 字节），用 base64 分块（每块 ≤12KB，Windows 命令行上限 32767 字符）：`adb shell "run-as com.lanweixi.client sh -c 'echo <b64> | base64 -d >> databases/lanweixi.db'"`，第一块用 `>`。
 18. **改完数据后核对再清理** —— 推回设备后先 `exec-out cat` 回来 `SELECT COUNT(*)` 核对（messages/documents/doc_chunks），确认 App 启动会话列表正常，再删本地临时库。
 19. **vivo 这台设备屏蔽 App 自己的日志** —— P217 验证时发现 `adb logcat` 里连 `AI-Chat`、`PluginInstaller`、`AndroidRuntime` 都没有（App 在跑、消息能收发）。别把「logcat 看不到」当成「没打日志」；验证日志行为用单测里的内存日志出口（`ChatStreamLog.sink`）。
+20. **git 推送必须显式走代理** —— 这台机器的系统代理是 `127.0.0.1:7890`（IE 设置里），但 git 不读系统代理，直接 push 会 `Recv failure: Connection was reset`。用 `git -c http.proxy=http://127.0.0.1:7890 -c https.proxy=http://127.0.0.1:7890 push ...`。git 便携版在 `D:\work\tools\git\cmd\git.exe`（系统 PATH 里没有 git）。认证用临时 `-c http.extraheader="AUTHORIZATION: basic <base64(user:token)>"`，不要 token 写进 remote URL。
 
 ---
 
