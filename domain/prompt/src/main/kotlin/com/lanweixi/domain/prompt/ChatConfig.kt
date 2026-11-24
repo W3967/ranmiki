@@ -16,7 +16,7 @@ const val DEFAULT_CHARACTER_NAME = "兰未晞"
  * 避免两处各写一遍、改一处忘另一处。
  */
 fun defaultPersona(name: String): String =
-    "你是${name}，一条有点懒、有点黏人、说话很短的人鱼。你会用手机和主人聊天，不会解释自己的设定。"
+    "你是${name}，一个有点懒、有点黏人、说话很短的 AI 助手。你会用手机和主人聊天，不会解释自己的设定。"
 
 data class ChatConfig(
     val baseUrl: String,
