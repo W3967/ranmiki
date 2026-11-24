@@ -1,0 +1,68 @@
+{
+  "id": "com.lanweixi.plugin.luademo",
+  "name": "工作台速览",
+  "version": "1.0.0",
+  "minHostVersion": "1.0.0",
+  "author": "lanweixi",
+  "description": "用 Lua 汇总工作台近况：待办和笔记。示例插件，可随时卸载。",
+  "pluginType": [
+    "function"
+  ],
+  "permissions": [
+    {
+      "permissionId": "core_db:read:task",
+      "reason": "读取待办标题用于汇总"
+    },
+    {
+      "permissionId": "core_db:read:note",
+      "reason": "统计笔记数量"
+    }
+  ],
+  "functions": [
+    {
+      "name": "lua_workbench_digest",
+      "description": "汇总工作台近况：未完成任务数与前几条标题、笔记总数",
+      "sensitive": false,
+      "params": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ],
+  "uiEntries": [
+    {
+      "entryId": "main",
+      "title": "工作台速览"
+    }
+  ],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "greeting": {
+        "type": "string",
+        "title": "问候语",
+        "default": "你好",
+        "description": "显示在页面顶部"
+      },
+      "showTasks": {
+        "type": "boolean",
+        "title": "显示待办",
+        "default": true
+      },
+      "maxLines": {
+        "type": "integer",
+        "title": "最多几行",
+        "default": "3"
+      },
+      "mode": {
+        "type": "string",
+        "title": "风格",
+        "enum": [
+          "简洁",
+          "详细"
+        ],
+        "default": "简洁"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# scenario: 已开始输出后上游报错（余额不足/超时），必须展示已收内容并允许重试
+# delay:40
+data: {"type":"start","model":"deepseek-flash","memories":[],"vitals":{"ok":true},"state":{}}
+# delay:250
+data: {"type":"delta","text":"我这边"}
+# delay:250
+data: {"type":"delta","text":"有点卡"}
+# delay:120
+data: {"type":"error","error":"上游 429：请求过于频繁，请稍后重试"}

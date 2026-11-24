@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 更多 Tab 图标 · VectorDrawable
+     由 more-icon-starry.svg 转换，24×24dp，viewport 24×24
+     三颗星 = 更多入口，选中态靠颜色 + 卷草下划线，不换图标造型
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 三颗八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M6,8.5 L6.7,10.8 L9,11.5 L6.7,12.2 L6,14.5 L5.3,12.2 L3,11.5 L5.3,10.8 Z M12,8.5 L12.7,10.8 L15,11.5 L12.7,12.2 L12,14.5 L11.3,12.2 L9,11.5 L11.3,10.8 Z M18,8.5 L18.7,10.8 L21,11.5 L18.7,12.2 L18,14.5 L17.3,12.2 L15,11.5 L17.3,10.8 Z"/>
+    <!-- 下方藤蔓卷须 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:pathData="M5,17 Q8,19 12,17.5 Q16,19 19,17"/>
+</vector>

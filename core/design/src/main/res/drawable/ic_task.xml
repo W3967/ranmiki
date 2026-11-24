@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 任务 Tab 图标 · VectorDrawable
+     由 task-icon-starry.svg 转换，24×24dp，viewport 24×24
+     线宽 1.75px（规范 1.5–2px），选中态靠颜色 + 卷草下划线，不换图标造型
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 夹板 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M6,8 L6,19 Q6,20 7,20 L17,20 Q18,20 18,19 L18,8 Q18,7 17,7 L7,7 Q6,7 6,8 Z M10,7 Q10,5 12,5 Q14,5 14,7"/>
+    <!-- 三项勾选 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M8,10.5 L9,11.5 L11,9.5 M8,14 L9,15 L11,13 M8,17.5 L9,18.5 L11,16.5 M13,10.5 L17,10.5 M13,14 L17,14 M13,17.5 L16,17.5"/>
+    <!-- 顶部八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M12,2.5 L12.5,4 L14,4.5 L12.5,5 L12,6.5 L11.5,5 L10,4.5 L11.5,4 Z"/>
+</vector>

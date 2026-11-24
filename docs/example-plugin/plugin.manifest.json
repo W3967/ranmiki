@@ -1,0 +1,71 @@
+{
+  "$schema": "https://lanweixi.dev/schema/plugin-manifest-v1.schema.json",
+  "id": "com.lanweixi.plugin.demo",
+  "name": "Demo 示例插件",
+  "version": "1.0.0",
+  "minHostVersion": "1.0.0",
+  "author": "LanWeixi",
+  "repo": "https://github.com/xxx/lanweixi-demo-plugin",
+  "description": "演示Function + UI扩展的示例插件",
+  "pluginType": [
+    "function",
+    "ui"
+  ],
+  "dependencies": [
+    {
+      "pluginId": "com.lanweixi.plugin.helper",
+      "versionRange": ">=1.0.0"
+    }
+  ],
+  "permissions": [
+    {
+      "permissionId": "core_db:read:note",
+      "reason": "读取笔记用于摘要统计"
+    },
+    {
+      "permissionId": "search:index",
+      "reason": "将插件生成的摘要加入全局搜索"
+    }
+  ],
+  "functions": [
+    {
+      "name": "get_note_summary",
+      "description": "读取笔记并生成简短摘要",
+      "sensitive": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "noteId"
+        ]
+      }
+    }
+  ],
+  "uiEntries": [
+    {
+      "entryId": "demo_stat_page",
+      "title": "笔记统计面板",
+      "placement": "page"
+    }
+  ],
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "autoSummary": {
+        "type": "boolean",
+        "title": "自动生成摘要",
+        "default": true
+      }
+    }
+  },
+  "hotkeys": [
+    {
+      "actionId": "open_demo_stat_page",
+      "label": "打开笔记统计面板"
+    }
+  ]
+}

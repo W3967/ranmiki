@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 启动图标背景：星夜蓝紫深藏青 -->
+    <color name="ic_launcher_background">#0B1030</color>
+    <!-- 慕夏主色（供 XML 矢量引用；Compose 侧用 MaterialTheme.colorScheme.primary） -->
+    <color name="mucha_primary">#8B7CF6</color>
+</resources>

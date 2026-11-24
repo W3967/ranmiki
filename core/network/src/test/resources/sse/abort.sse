@@ -1,0 +1,7 @@
+# scenario: 收到 2 个 delta 后连接被上游掐断，没有 done 事件
+# delay:40
+data: {"type":"start","model":"deepseek-flash","memories":[],"vitals":{"ok":true},"state":{}}
+# delay:200
+data: {"type":"delta","text":"我在"}
+# delay:200
+data: {"type":"delta","text":"听你说"}

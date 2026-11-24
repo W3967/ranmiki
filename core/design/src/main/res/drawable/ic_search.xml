@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 搜索图标 · VectorDrawable
+     24×24dp，viewport 24×24
+     线宽 1.75px（与其它矢量图标一致）
+     颜色走 #8B7CF6（星夜）/ 主题 tint；精细版暂缺位图，直接复用这一份
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 放大镜圈 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M4,10.5 A6.5,6.5 0 1,0 17,10.5 A6.5,6.5 0 1,0 4,10.5 Z" />
+    <!-- 手柄 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:pathData="M15.6,15.6 L20,20" />
+</vector>

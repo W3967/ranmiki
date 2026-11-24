@@ -1,0 +1,33 @@
+# scenario: 网络抖动（中途两次 800ms 空档），delta 内含换行/代码块/emoji
+# delay:50
+data: {"type":"start","model":"deepseek-flash","memories":[],"vitals":{"ok":true},"state":{}}
+# delay:30
+data: {"type":"delta","text":"我先想一下"}
+# delay:30
+data: {"type":"delta","text":"。\n\n你"}
+# delay:30
+data: {"type":"delta","text":"说的那个"}
+# delay:800
+data: {"type":"delta","text":"办法我"}
+# delay:30
+data: {"type":"delta","text":"试了，"}
+# delay:30
+data: {"type":"delta","text":"大概是"}
+# delay:30
+data: {"type":"delta","text":"这样：\n"}
+# delay:30
+data: {"type":"delta","text":"```\n"}
+# delay:800
+data: {"type":"delta","text":"adb shell"}
+# delay:30
+data: {"type":"delta","text":" input tap"}
+# delay:30
+data: {"type":"delta","text":" 540 960\n"}
+# delay:30
+data: {"type":"delta","text":"```\n"}
+# delay:30
+data: {"type":"delta","text":"结果还行"}
+# delay:30
+data: {"type":"delta","text":" 😊"}
+# delay:10
+data: {"type":"done","reply":"我先想一下。\n\n你说的那个办法我试了，大概是这样：\n```\nadb shell input tap 540 960\n```\n结果还行 😊","latencyMs":4120,"memories":[],"vitals":{"energy":0.6,"thirst":0.6},"model":"deepseek-flash"}

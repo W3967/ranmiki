@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 插件图标 · VectorDrawable
+     由 plugin-icon-starry.svg 转换，24×24dp，viewport 24×24
+     线宽 1.75px（规范 1.5–2px）
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 拼图块 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7,9 L9.5,9 Q9.5,6.5 12,6.5 Q14.5,6.5 14.5,9 L17,9 L17,12 Q14.5,12 14.5,14.5 L14.5,17 L12,17 Q12,14.5 9.5,14.5 L7,14.5 Q7,12 9.5,12 L9.5,9 Z"/>
+    <!-- 中心八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M12,10 L12.6,11.4 L14,12 L12.6,12.6 L12,14 L11.4,12.6 L10,12 L11.4,11.4 Z"/>
+</vector>

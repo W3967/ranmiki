@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 设置图标 · VectorDrawable
+     由 settings-icon-starry.svg 转换，24×24dp，viewport 24×24
+     线宽 1.75px（规范 1.5–2px）
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 齿轮外圈（8 齿简化） -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M12,5 L13,5 L13.8,7 Q15,7.5 15.8,8.5 L17.5,8 L18.5,9.5 L17,10.8 Q17.5,12 17.5,12 Q17.5,12 17,13.2 L18.5,14.5 L17.5,16 L15.8,15.5 Q15,16.5 13.8,17 L13,19 L12,19 L11,19 L10.2,17 Q9,16.5 8.2,15.5 L6.5,16 L5.5,14.5 L7,13.2 Q6.5,12 6.5,12 Q6.5,12 7,10.8 L5.5,9.5 L6.5,8 L8.2,8.5 Q9,7.5 10.2,7 L11,5 Z"/>
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:pathData="M8.5,12.0 a3.5,3.5 0 1,0 7.0,0 a3.5,3.5 0 1,0 -7.0,0"/>
+    <!-- 中心八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M12,9.5 L12.6,11.4 L14.5,12 L12.6,12.6 L12,14.5 L11.4,12.6 L9.5,12 L11.4,11.4 Z"/>
+</vector>

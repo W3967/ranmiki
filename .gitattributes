@@ -1,0 +1,14 @@
+# 统一换行：工作区用 LF，Windows 上也一样，避免 gradlew 被转成 CRLF 后无法执行
+* text=auto eol=lf
+
+# Windows 脚本保持 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制
+*.jpg binary
+*.png binary
+*.jks binary
+*.keystore binary
+*.jar binary
+*.zip binary

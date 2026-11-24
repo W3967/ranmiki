@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 复盘图标 · VectorDrawable
+     由 review-icon-starry.svg 转换，24×24dp，viewport 24×24
+     线宽 1.75px（规范 1.5–2px）
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 圆形回环箭头 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M17,7 A8,8 0,1 0,18.5,12.5 M18.5,9.5 L20,13 L16.5,12.5 Z"/>
+    <!-- 中心八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M12,9 L12.7,11.3 L15,12 L12.7,12.7 L12,15 L11.3,12.7 L9,12 L11.3,11.3 Z"/>
+</vector>

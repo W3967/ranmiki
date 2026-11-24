@@ -1,0 +1,208 @@
+{
+  "$schema": "https://lanweixi.dev/schema/plugin-manifest-v1.schema.json",
+  "type": "object",
+  "title": "LanWeixi Plugin Manifest",
+  "description": "兰未晞插件清单描述文件，对齐DSH插件设计",
+  "required": [
+    "id",
+    "name",
+    "version",
+    "author",
+    "description",
+    "pluginType"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "插件唯一ID，反向域名风格，不可重复，例：com.example.myplugin",
+      "pattern": "^[a-z0-9\\.\\-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "插件展示名称"
+    },
+    "version": {
+      "type": "string",
+      "description": "语义化版本，如 1.0.0",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "minHostVersion": {
+      "type": "string",
+      "description": "最低兼容宿主版本，语义化版本",
+      "default": "1.0.0"
+    },
+    "author": {
+      "type": "string",
+      "description": "作者信息"
+    },
+    "repo": {
+      "type": "string",
+      "description": "源码仓库地址"
+    },
+    "icon": {
+      "type": "string",
+      "description": "图标相对路径"
+    },
+    "description": {
+      "type": "string",
+      "description": "简短介绍，插件市场展示"
+    },
+    "readme": {
+      "type": "string",
+      "description": "README 相对路径，支持markdown"
+    },
+    "pluginType": {
+      "type": "array",
+      "description": "插件类型，可同时多选",
+      "items": {
+        "type": "string",
+        "enum": [
+          "function",
+          "ui"
+        ]
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "可选依赖，缺失时插件仅降级功能，不阻止加载",
+      "items": {
+        "type": "object",
+        "required": [
+          "pluginId",
+          "versionRange"
+        ],
+        "properties": {
+          "pluginId": {
+            "type": "string"
+          },
+          "versionRange": {
+            "type": "string",
+            "description": "版本范围，如 >=1.0.0 <2.0.0"
+          }
+        }
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "description": "需要向用户申请的权限列表",
+      "items": {
+        "type": "object",
+        "required": [
+          "permissionId",
+          "reason"
+        ],
+        "properties": {
+          "permissionId": {
+            "type": "string",
+            "enum": [
+              "core_db:read:task",
+              "core_db:write:task",
+              "core_db:read:note",
+              "core_db:write:note",
+              "core_db:read:creation_prompt",
+              "core_db:write:creation_prompt",
+              "core_db:read:document_index",
+              "core_db:write:document_index",
+              "network",
+              "ai:load_local_model",
+              "document:read_all",
+              "search:index",
+              "log:subscribe_host",
+              "ui:custom_theme",
+              "hotkey:register"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "description": "向用户展示的权限用途说明"
+          }
+        }
+      }
+    },
+    "functions": {
+      "type": "array",
+      "description": "Function Call 工具定义，pluginType包含function时填写",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "params"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "LLM调用函数名"
+          },
+          "description": {
+            "type": "string",
+            "description": "给LLM看的函数描述"
+          },
+          "sensitive": {
+            "type": "boolean",
+            "default": false,
+            "description": "true=每次调用弹窗确认；false=预授权后自动调用"
+          },
+          "params": {
+            "type": "object",
+            "description": "JSON Schema 参数结构"
+          }
+        }
+      }
+    },
+    "uiEntries": {
+      "type": "array",
+      "description": "Compose UI入口注册，pluginType包含ui时填写",
+      "items": {
+        "type": "object",
+        "required": [
+          "entryId",
+          "title"
+        ],
+        "properties": {
+          "entryId": {
+            "type": "string",
+            "description": "UI组件唯一标识，宿主用来定位Compose组件"
+          },
+          "title": {
+            "type": "string",
+            "description": "菜单/面板显示标题"
+          },
+          "placement": {
+            "type": "string",
+            "enum": [
+              "page",
+              "sidebar",
+              "setting",
+              "dialog"
+            ],
+            "default": "page"
+          }
+        }
+      }
+    },
+    "configSchema": {
+      "type": "object",
+      "description": "声明式配置Schema，宿主自动生成表单；不填则使用插件自定义配置页"
+    },
+    "hotkeys": {
+      "type": "array",
+      "description": "希望注册的快捷键（仅申请，最终由用户确认分配）",
+      "items": {
+        "type": "object",
+        "required": [
+          "actionId",
+          "label"
+        ],
+        "properties": {
+          "actionId": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

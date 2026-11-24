@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 兰未晞 · 提示词图标 · VectorDrawable
+     由 prompt-icon-starry.svg 转换，24×24dp，viewport 24×24
+     线宽 1.75px（规范 1.5–2px）
+     颜色用 #8B7CF6（星夜 #8B7CF6 / 日光金 #B98A2F），不要写死
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 魔法棒 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="1.75"
+        android:strokeLineCap="round"
+        android:pathData="M8,18 L15.5,9.5 M9.5,19 L17,11"/>
+    <!-- 顶部八角星 -->
+    <path
+        android:fillColor="#EDEAFF"
+        android:pathData="M17,4 L17.7,6.8 L20.5,7.5 L17.7,8.2 L17,11 L16.3,8.2 L13.5,7.5 L16.3,6.8 Z"/>
+    <!-- 底部白百合（简化） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#8B7CF6"
+        android:strokeWidth="0.8"
+        android:pathData="M8,18 Q7,16.5 8.5,16.5 Q9,17.5 8,18 Z"/>
+</vector>
