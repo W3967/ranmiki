@@ -28,7 +28,8 @@
 ## 安装
 
 - Android 8.0+（API 26），包名 `com.lanweixi.client`
-- 本版本没有附预编译 APK，需要自行构建：
+- **直接下载附件 `app-release.apk`**（正式签名，v2.0.0）安装即可
+- 也可以自行构建：
 
 ```bash
 ./gradlew :app:assembleRelease
