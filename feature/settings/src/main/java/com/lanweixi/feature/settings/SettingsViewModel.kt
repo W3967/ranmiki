@@ -25,8 +25,8 @@ data class SettingsUiState(
     val persona: String = "",
     /** P192：导入的长期记忆原文。 */
     val memory: String = "",
-    /** P157：慕夏主题档位。 */
-    val themeMode: String = "night_purple",
+    /** P157：慕夏主题档位；P218：默认纯净。 */
+    val themeMode: String = "pure",
     /** P174：图标风格。 */
     val iconStyle: String = "vector",
     /** P180：背景遮罩强度。 */

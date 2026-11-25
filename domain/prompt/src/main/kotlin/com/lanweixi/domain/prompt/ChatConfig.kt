@@ -33,8 +33,8 @@ data class ChatConfig(
     val scarEnabled: Boolean = true,
     /** P103：社交动态用 LLM 生成（默认关，用模板）。 */
     val socialLlmEnabled: Boolean = false,
-    /** P157：慕夏主题档位（night_purple / daylight_gold / pure）。 */
-    val themeMode: String = "night_purple",
+    /** P157：慕夏主题档位（pure / night_purple / daylight_gold）；P218：默认纯净。 */
+    val themeMode: String = "pure",
     /** P174：图标风格（vector / detailed）。 */
     val iconStyle: String = "vector",
     /** P180：背景插画遮罩（0–0.85）。 */

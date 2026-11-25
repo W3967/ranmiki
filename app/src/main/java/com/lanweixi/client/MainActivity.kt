@@ -300,15 +300,16 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-            var themeMode by remember { mutableStateOf(MuchaThemeMode.StarryNight) }
+            // P218：默认纯净（无插画、纯色底），首帧就用它，避免启动闪一下星夜
+            var themeMode by remember { mutableStateOf(MuchaThemeMode.PureMaterial3) }
             var iconStyle by remember { mutableStateOf(com.lanweixi.core.design.components.IconStyle.VECTOR) }
             var muchaTuning by remember { mutableStateOf(com.lanweixi.core.design.mucha.MuchaTuning()) }
             LaunchedEffect(Unit) {
-                val stored = runCatching { configStore.current().themeMode }.getOrDefault("night_purple")
+                val stored = runCatching { configStore.current().themeMode }.getOrDefault("pure")
                 themeMode = when (stored) {
                     "daylight_gold" -> MuchaThemeMode.DaylightGold
-                    "pure" -> MuchaThemeMode.PureMaterial3
-                    else -> MuchaThemeMode.StarryNight
+                    "night_purple" -> MuchaThemeMode.StarryNight
+                    else -> MuchaThemeMode.PureMaterial3
                 }
                 val cfg = runCatching { configStore.current() }.getOrNull()
                 iconStyle = if (cfg?.iconStyle == "detailed") {
@@ -1535,8 +1536,8 @@ class MainActivity : ComponentActivity() {
                                 onThemeChange = { id ->
                                     themeMode = when (id) {
                                         "daylight_gold" -> MuchaThemeMode.DaylightGold
-                                        "pure" -> MuchaThemeMode.PureMaterial3
-                                        else -> MuchaThemeMode.StarryNight
+                                        "night_purple" -> MuchaThemeMode.StarryNight
+                                        else -> MuchaThemeMode.PureMaterial3
                                     }
                                     viewModel.onThemeChange(id) { }
                                 },

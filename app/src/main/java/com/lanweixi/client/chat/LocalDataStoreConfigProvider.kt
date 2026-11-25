@@ -55,7 +55,7 @@ class LocalDataStoreConfigProvider(
             characterName = characterName,
             scarEnabled = prefs[SCAR_ENABLED] ?: true,
             socialLlmEnabled = prefs[SOCIAL_LLM] ?: false,
-            themeMode = prefs[THEME_MODE].orEmpty().ifBlank { "night_purple" },
+            themeMode = prefs[THEME_MODE].orEmpty().ifBlank { "pure" },
             iconStyle = prefs[ICON_STYLE].orEmpty().ifBlank { "vector" },
             bgVeil = prefs[BG_VEIL].orEmpty().ifBlank { "0.50" },
             barAlpha = prefs[BAR_ALPHA].orEmpty().ifBlank { "0.62" },
