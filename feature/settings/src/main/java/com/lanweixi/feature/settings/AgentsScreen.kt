@@ -146,7 +146,8 @@ private fun AgentRow(agent: AgentProfile, onClick: () -> Unit) {
 }
 
 @Composable
-private fun AgentEditDialog(
+/** P218：从聊天页「+ → 新建工具人」也能直接打开这个对话框。 */
+fun AgentEditDialog(
     initial: AgentProfile,
     onDismiss: () -> Unit,
     onSave: (AgentProfile) -> Unit,

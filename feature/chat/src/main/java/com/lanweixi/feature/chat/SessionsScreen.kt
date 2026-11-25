@@ -71,6 +71,8 @@ fun SessionsScreen(
     onDelete: (ConversationItem) -> Unit = {},
     onCreateGroup: (GroupSession) -> Unit = {},
     onOpenGroups: () -> Unit = {},
+    /** P218：右上角 + 里直接新建工具人（不跳设置页）。 */
+    onNewAgent: () -> Unit = {},
     /** P202：还没配 API Key 时在列表顶部提示，不用点进会话才发现。 */
     missingApiKey: Boolean = false,
     onOpenSettings: () -> Unit = {},
@@ -114,6 +116,13 @@ fun SessionsScreen(
                             onClick = {
                                 menuOpen = false
                                 creatingGroup = true
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("新建工具人") },
+                            onClick = {
+                                menuOpen = false
+                                onNewAgent()
                             },
                         )
                         DropdownMenuItem(

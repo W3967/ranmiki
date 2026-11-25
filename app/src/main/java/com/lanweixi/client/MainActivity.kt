@@ -930,7 +930,11 @@ class MainActivity : ComponentActivity() {
                             val sessionsState by vm.state.collectAsState()
                             // 从会话页返回时刷新一下（最后一条消息变了）
                             LaunchedEffect(Unit) { vm.refresh() }
-                            val agents = remember { agentStore.list() }
+                            var agents by remember { mutableStateOf(agentStore.list()) }
+                            // P218：聊天页「+ → 新建工具人」直接弹编辑框，不跳设置页
+                            var newAgentDraft by remember {
+                                mutableStateOf<com.lanweixi.domain.prompt.AgentProfile?>(null)
+                            }
                             com.lanweixi.feature.chat.SessionsScreen(
                                 state = sessionsState,
                                 characterName = characterName,
@@ -954,9 +958,27 @@ class MainActivity : ComponentActivity() {
                                     vm.refresh()
                                     navController.navigate(Route.GROUP_CHAT + "/" + group.id)
                                 },
+                                onNewAgent = {
+                                    newAgentDraft = com.lanweixi.domain.prompt.AgentProfile(
+                                        id = "agent_" + System.currentTimeMillis(),
+                                        name = "新工具人",
+                                    )
+                                },
                                 missingApiKey = missingApiKey,
                                 onOpenSettings = { navController.navigate(Route.SETTINGS) },
                             )
+                            newAgentDraft?.let { draft ->
+                                com.lanweixi.feature.settings.AgentEditDialog(
+                                    initial = draft,
+                                    onDismiss = { newAgentDraft = null },
+                                    onSave = { profile ->
+                                        agentStore.upsert(profile)
+                                        agents = agentStore.list()
+                                        newAgentDraft = null
+                                    },
+                                    onDelete = null,
+                                )
+                            }
                         }
                         composable(
                             route = Route.CONVERSATION + "/{sessionId}?highlight={highlight}",
