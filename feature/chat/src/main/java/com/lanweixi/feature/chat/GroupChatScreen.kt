@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,14 +25,17 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,6 +54,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.lanweixi.domain.prompt.AgentProfile
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -82,6 +87,11 @@ fun GroupChatScreen(
     /** P205：点引用卡片定位原消息。 */
     onLocateQuote: (Long) -> Unit = {},
     onClearHighlight: () -> Unit = {},
+    /** P218：成员面板里可加入的工具人全集。 */
+    allAgents: List<AgentProfile> = emptyList(),
+    /** P218：把工具人加进群 / 移出群。 */
+    onAddMember: (String) -> Unit = {},
+    onRemoveMember: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var showMembers by remember { mutableStateOf(false) }
@@ -289,7 +299,13 @@ fun GroupChatScreen(
     }
 
     if (showMembers) {
-        MembersDialog(state.members, onDismiss = { showMembers = false })
+        MembersDialog(
+            members = state.members,
+            allAgents = allAgents,
+            onAddMember = onAddMember,
+            onRemoveMember = onRemoveMember,
+            onDismiss = { showMembers = false },
+        )
     }
 }
 
@@ -722,13 +738,32 @@ private fun GroupChatField(
 
 // ───────────────────────────── 成员 ─────────────────────────────
 
+/**
+ * P218：群成员面板。
+ *
+ * 兰未晞是固定群主（不能移出）；工具人可随时「移出」；
+ * 下半部分是还没进群的工具人，点「加入」即可加进来。
+ * 加减都走调用方落 AgentStore，然后刷新群成员快照。
+ */
 @Composable
-private fun MembersDialog(members: List<GroupMember>, onDismiss: () -> Unit) {
+private fun MembersDialog(
+    members: List<GroupMember>,
+    allAgents: List<AgentProfile>,
+    onAddMember: (String) -> Unit,
+    onRemoveMember: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val joinable = allAgents.filter { agent -> members.none { it.id == agent.id } }
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("群成员") },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier
+                    .heightIn(max = 420.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 members.forEach { member ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         ChatAvatar(name = member.name, imageUri = member.avatarUri, size = 30.dp, tint = parseColor(member.color))
@@ -748,12 +783,52 @@ private fun MembersDialog(members: List<GroupMember>, onDismiss: () -> Unit) {
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
+                        if (!member.isHost) {
+                            TextButton(onClick = { onRemoveMember(member.id) }) {
+                                Text("移出", color = MaterialTheme.colorScheme.error)
+                            }
+                        }
+                    }
+                }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+                Text("添加成员", style = MaterialTheme.typography.labelMedium)
+                if (joinable.isEmpty()) {
+                    Text(
+                        "所有工具人都已在群里",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    joinable.forEach { agent ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            ChatAvatar(
+                                name = agent.name,
+                                imageUri = agent.avatarUri,
+                                size = 30.dp,
+                                tint = parseColor(agent.color),
+                            )
+                            Spacer(Modifier.width(10.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(agent.name, style = MaterialTheme.typography.bodyMedium)
+                                if (!agent.configured) {
+                                    Text(
+                                        "还没配 API Key",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                            TextButton(onClick = { onAddMember(agent.id) }) {
+                                Text("加入", color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
                     }
                 }
             }
         },
         confirmButton = {
-            androidx.compose.material3.TextButton(onClick = onDismiss) { Text("知道了") }
+            TextButton(onClick = onDismiss) { Text("完成") }
         },
     )
 }

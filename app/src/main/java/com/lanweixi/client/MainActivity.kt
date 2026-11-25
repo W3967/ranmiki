@@ -753,7 +753,11 @@ class MainActivity : ComponentActivity() {
                                     groupTitle = group.title,
                                     hostName = characterName,
                                     hostAvatarUri = avatar.characterUri,
-                                    memberIds = group.memberIds,
+                                    memberIdsProvider = {
+                                        agentStore.listGroups()
+                                            .firstOrNull { it.id == groupId }?.memberIds
+                                            ?: emptyList()
+                                    },
                                     agentStore = agentStore,
                                     port = groupChatPort,
                                     useCase = groupChatEngine,
@@ -762,6 +766,15 @@ class MainActivity : ComponentActivity() {
                             val vm: com.lanweixi.feature.chat.GroupChatViewModel =
                                 viewModel(factory = factory)
                             val groupState by vm.state.collectAsState()
+                            // P218：群聊里随时加人/移人；改完刷新 VM 的成员快照
+                            val allAgents = remember { agentStore.list() }
+                            val updateMembers: (List<String>) -> Unit = { ids ->
+                                val current = agentStore.listGroups().firstOrNull { it.id == groupId }
+                                if (current != null) {
+                                    agentStore.upsertGroup(current.copy(memberIds = ids))
+                                }
+                                vm.refreshMembers()
+                            }
                             com.lanweixi.feature.chat.GroupChatScreen(
                                 state = groupState,
                                 userAvatarUri = avatar.userUri,
@@ -777,6 +790,22 @@ class MainActivity : ComponentActivity() {
                                 onClearQuote = vm::clearQuote,
                                 onLocateQuote = vm::locateQuote,
                                 onClearHighlight = vm::clearHighlight,
+                                // P218：成员面板里加减工具人
+                                allAgents = allAgents,
+                                onAddMember = { agentId ->
+                                    val current = agentStore.listGroups()
+                                        .firstOrNull { it.id == groupId }
+                                    if (current != null && agentId !in current.memberIds) {
+                                        updateMembers(current.memberIds + agentId)
+                                    }
+                                },
+                                onRemoveMember = { agentId ->
+                                    val current = agentStore.listGroups()
+                                        .firstOrNull { it.id == groupId }
+                                    if (current != null) {
+                                        updateMembers(current.memberIds - agentId)
+                                    }
+                                },
                             )
                         }
                         composable(Route.AGENTS) {
@@ -1807,13 +1836,14 @@ class SessionsViewModelFactory(
     }
 }
 
-/** P197 群聊页工厂：成员现取（改名/新增立即生效），引擎与端口在 Activity 里建一次。 */
+/** P197 群聊页工厂：成员现取（改名/新增/移出立即生效），引擎与端口在 Activity 里建一次。 */
 class GroupChatViewModelFactory(
     private val groupId: String,
     private val groupTitle: String,
     private val hostName: String,
     private val hostAvatarUri: String?,
-    private val memberIds: List<String>,
+    /** P218：每次刷新成员时现取群的最新 memberIds（群聊页里可以随时加人/移人）。 */
+    private val memberIdsProvider: () -> List<String>,
     private val agentStore: com.lanweixi.core.data.agent.AgentStore,
     private val port: com.lanweixi.feature.chat.GroupChatPort,
     private val useCase: com.lanweixi.feature.chat.GroupChatUseCase,
@@ -1827,8 +1857,8 @@ class GroupChatViewModelFactory(
             hostName = hostName,
             hostAvatarUri = hostAvatarUri,
             membersProvider = {
-                // 群成员关系以建群时为准；工具人被删了自然就不在群里
-                val ids = memberIds.toSet()
+                // 群成员关系现取：群里加人/移人后 refreshMembers() 立即生效
+                val ids = memberIdsProvider().toSet()
                 agentStore.list().filter { it.id in ids }
             },
             port = port,

@@ -271,4 +271,58 @@ class GroupChatViewModelTest {
 
         assertEquals(12L, viewModel.state.value.quote?.messageId)
     }
+
+    // ── P218：群聊里随时加减成员 ─────────────────────────
+
+    private fun mutableMemberVm(
+        scope: CoroutineScope,
+        initial: List<AgentProfile>,
+    ): Pair<GroupChatViewModel, (List<AgentProfile>) -> Unit> {
+        var current = initial
+        val vm = GroupChatViewModel(
+            groupId = "g1",
+            groupTitle = "测试群",
+            hostName = "兰未晞",
+            hostAvatarUri = null,
+            membersProvider = { current },
+            port = FakePort(),
+            useCase = FakeUseCase(),
+            scope = scope,
+        )
+        return vm to { next -> current = next }
+    }
+
+    @Test
+    fun `adding a member shows up after refresh`() = runTest {
+        val (viewModel, setMembers) = mutableMemberVm(
+            CoroutineScope(UnconfinedTestDispatcher(testScheduler)),
+            listOf(agentReady),
+        )
+        assertEquals(listOf("修图师"), viewModel.state.value.members.filter { !it.isHost }.map { it.name })
+
+        setMembers(listOf(agentReady, agentReady2))
+        viewModel.refreshMembers()
+
+        assertEquals(
+            "新加的工具人要出现在成员列表里",
+            listOf("修图师", "文案"),
+            viewModel.state.value.members.filter { !it.isHost }.map { it.name },
+        )
+    }
+
+    @Test
+    fun `removing a member drops their mention`() = runTest {
+        val (viewModel, setMembers) = mutableMemberVm(
+            CoroutineScope(UnconfinedTestDispatcher(testScheduler)),
+            listOf(agentReady, agentReady2),
+        )
+        viewModel.toggleTarget(agentReady2.id)
+        assertTrue(agentReady2.id in viewModel.state.value.targetIds)
+
+        setMembers(listOf(agentReady))
+        viewModel.refreshMembers()
+
+        assertTrue("被移出的人不该还留在 @ 里", viewModel.state.value.targetIds.isEmpty())
+        assertEquals(listOf("修图师"), viewModel.state.value.members.filter { !it.isHost }.map { it.name })
+    }
 }
